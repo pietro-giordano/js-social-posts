@@ -57,7 +57,6 @@ const posts = [
 ];
 
 const container = document.getElementById('container');
-const likedPostId = [];
 
 posts.forEach((post, index) => {
 
@@ -82,7 +81,7 @@ posts.forEach((post, index) => {
         <div class="post__footer">
             <div class="likes js-likes">
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid=${post.id}>
+                    <a class="like-button  js-like-button" href="##" data-postid=${post.id}>
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label">Mi Piace</span>
                     </a>
@@ -98,8 +97,11 @@ posts.forEach((post, index) => {
 });
 
 const buttonsLike = document.querySelectorAll('.like-button');
+const likedPostId = [];
 
 buttonsLike.forEach((singleButton, index) => {
+
+    const liked = document.querySelectorAll('.js-likes-counter');
 
     singleButton.addEventListener('click',
     
@@ -111,15 +113,18 @@ buttonsLike.forEach((singleButton, index) => {
 
                 singleButton.classList.remove('like-button--liked');
                 posts[index].likes -= 1;
-                document.getElementById('like-counter-1').innerHTML = posts[index].likes;
+                liked[index].innerHTML = posts[index].likes;
 
             } else {
 
                 singleButton.classList.add('like-button--liked');
                 posts[index].likes += 1;
-                document.getElementById('like-counter-1').innerHTML = posts[index].likes;
+                liked[index].innerHTML = posts[index].likes;
+                likedPostId.push(posts[index].id);
 
             }
+
+            console.log(likedPostId);
 
         }
 
