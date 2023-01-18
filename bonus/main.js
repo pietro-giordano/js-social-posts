@@ -58,7 +58,7 @@ const posts = [
 
 const container = document.getElementById('container');
 
-posts.forEach((post) => {
+posts.forEach((post, index) => {
 
     const newPost = document.createElement('div');
     newPost.classList.add('post');
