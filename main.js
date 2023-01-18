@@ -57,8 +57,9 @@ const posts = [
 ];
 
 const container = document.getElementById('container');
+const likedPostId = [];
 
-posts.forEach((post) => {
+posts.forEach((post, index) => {
 
     const newPost = document.createElement('div');
     newPost.classList.add('post');
@@ -81,7 +82,7 @@ posts.forEach((post) => {
         <div class="post__footer">
             <div class="likes js-likes">
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="1">
+                    <a class="like-button  js-like-button" href="#" data-postid=${post.id}>
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label">Mi Piace</span>
                     </a>
@@ -93,5 +94,35 @@ posts.forEach((post) => {
         </div>            
     `;
     container.append(newPost);
+
+});
+
+const buttonsLike = document.querySelectorAll('.like-button');
+
+buttonsLike.forEach((singleButton, index) => {
+
+    singleButton.addEventListener('click',
+    
+        () => {
+
+            console.log(singleButton);
+
+            if(singleButton.matches('.like-button--liked')) {
+
+                singleButton.classList.remove('like-button--liked');
+                posts[index].likes -= 1;
+                document.getElementById('like-counter-1').innerHTML = posts[index].likes;
+
+            } else {
+
+                singleButton.classList.add('like-button--liked');
+                posts[index].likes += 1;
+                document.getElementById('like-counter-1').innerHTML = posts[index].likes;
+
+            }
+
+        }
+
+    );
 
 });
