@@ -58,14 +58,29 @@ const posts = [
 
 const container = document.getElementById('container');
 
-posts.forEach((post, index) => {
+posts.forEach((post) => {
+
+    const splittedCreated = post.created.split('-');
+    post.created = splittedCreated[2] + '/' + splittedCreated[1] + '/' + splittedCreated[0];
+
+    let authorImage;
+    if(post.author.image != null) {
+
+        authorImage = `<img class="profile-pic" src=${post.author.image} alt="${post.author.name}"></img>`;
+
+    } else {
+
+        const splittedAuthor = post.author.name.split(' ');
+        authorImage = `<span class="profile-pic-default">` + splittedAuthor[0].charAt(0) + splittedAuthor[1].charAt(0) + `</span>`
+
+    }
 
     container.innerHTML += `
         <div class="post">    
             <div class="post__header">
                 <div class="post-meta">                    
                     <div class="post-meta__icon">
-                        <img class="profile-pic" src=${post.author.image} alt="${post.author.name}">                    
+                        ${authorImage}                    
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${post.author.name}</div>
