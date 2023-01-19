@@ -86,7 +86,7 @@ posts.forEach((post, index) => {
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter">${post.likes}</b> persone
+                        Piace a <b id="like-counter-${post.id}" class="js-likes-counter">${post.likes}</b> persone
                     </div>
                 </div> 
             </div>     
@@ -98,29 +98,37 @@ posts.forEach((post, index) => {
 const buttonsLike = document.querySelectorAll('.like-button');
 const likedPostId = [];
 
-buttonsLike.forEach((singleButton, index) => {
-
-    const liked = document.querySelectorAll('.js-likes-counter');
+buttonsLike.forEach((singleButton) => {
 
     singleButton.addEventListener('click',
     
         function (event) {
 
-            console.log(singleButton);
             event.preventDefault();
 
-            if(singleButton.matches('.like-button--liked')) {
+            const postId = this.getAttribute('data-postid');
 
-                singleButton.classList.remove('like-button--liked');
-                posts[index].likes -= 1;
-                liked[index].innerHTML = posts[index].likes;
+            if(this.matches('.like-button--liked')) {
+
+                this.classList.remove('like-button--liked');
+
+                const likesCounter = document.getElementById('like-counter-' + postId);
+                let likes = parseInt(likesCounter.innerText);
+                likes -= 1;
+                likesCounter.innerHTML = likes;
+
+                likedPostId.splice(likedPostId.indexOf(postId), 1);
 
             } else {
 
-                singleButton.classList.add('like-button--liked');
-                posts[index].likes += 1;
-                liked[index].innerHTML = posts[index].likes;
-                likedPostId.push(posts[index].id);
+                this.classList.add('like-button--liked');
+
+                const likesCounter = document.getElementById('like-counter-' + postId);
+                let likes = parseInt(likesCounter.innerText);
+                likes += 1;
+                likesCounter.innerHTML = likes;
+
+                likedPostId.push(postId);
 
             }
 
